@@ -1,8 +1,8 @@
-package io.apicurio.svm;
+package io.apicurio.svm.system;
 
 import io.quarkus.test.junit.QuarkusIntegrationTest;
 
 @QuarkusIntegrationTest
-public class GreetingResourceIT extends GreetingResourceTest {
+public class SystemResourceIT extends SystemResourceTest {
     // Execute the same tests but in packaged mode.
 }
