@@ -1,6 +1,7 @@
 package io.apicurio.svm.system;
 
 import io.apicurio.svm.exception.ErrorResponse;
+import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -18,6 +19,8 @@ import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 @Path("/systems")
 @Produces(MediaType.APPLICATION_JSON)
@@ -34,7 +37,7 @@ public class SystemResource {
                     schema = @Schema(type = SchemaType.ARRAY, implementation = System.class)
             )
     )
-    public List<System> list() {
+    public List<System> get() {
         return System.listAll();
     }
 
@@ -85,6 +88,48 @@ public class SystemResource {
         System.persist(system);
         URI uri = uriInfo.getAbsolutePathBuilder().path(system.systemId.toString()).build();
         return Response.created(uri).entity(system).build();
+    }
+
+    @PUT
+    @Path("/{systemId}")
+    @APIResponse(
+            responseCode = "204",
+            description = "System updated",
+            content = @Content(
+                    mediaType = MediaType.APPLICATION_JSON,
+                    schema = @Schema(type = SchemaType.OBJECT, implementation = System.class)
+            )
+    )
+    @APIResponse(
+            responseCode = "400",
+            description = "Invalid System",
+            content = @Content(mediaType = MediaType.APPLICATION_JSON)
+    )
+    @APIResponse(
+            responseCode = "400",
+            description = "System object does not have systemId",
+            content = @Content(mediaType = MediaType.APPLICATION_JSON)
+    )
+    @APIResponse(
+            responseCode = "400",
+            description = "Path variable systemId does not match System.systemId",
+            content = @Content(mediaType = MediaType.APPLICATION_JSON)
+    )
+    @APIResponse(
+            responseCode = "404",
+            description = "No System found for systemId provided",
+            content = @Content(mediaType = MediaType.APPLICATION_JSON)
+    )
+    @Transactional
+    public Response put(@Parameter(name = "systemId", required = true) @PathParam("systemId") Integer systemId, @NotNull @Valid System system) {
+        if (!Objects.equals(systemId, system.systemId)) {
+            ErrorResponse errorResponse = new ErrorResponse(null, new ErrorResponse.ErrorMessage("post.system.systemId", "Path variable customerId does not match Customer.customerId"));
+            return Response.status(Response.Status.BAD_REQUEST).entity(errorResponse).build();
+        }
+        System existing = (System) System.findByIdOptional(systemId).orElseThrow(() -> new BadRequestException("No System found for systemId provided"));
+        existing.name = system.name;
+        System.persist(existing);
+        return Response.status(Response.Status.NO_CONTENT).build();
     }
 
 }

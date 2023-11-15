@@ -5,10 +5,10 @@ import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.http.ContentType;
 import jakarta.ws.rs.core.Response;
 import org.apache.commons.lang3.RandomStringUtils;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
+import static org.junit.jupiter.api.Assertions.*;
 
 @QuarkusTest
 public class SystemResourceTest {
@@ -34,15 +34,15 @@ public class SystemResourceTest {
                 .then()
                 .statusCode(Response.Status.CREATED.getStatusCode())
                 .extract().as(System.class);
-        Assertions.assertNotNull(saved.systemId);
-        Assertions.assertEquals(saved.name, system.name);
+        assertNotNull(saved.systemId);
+        assertEquals(saved.name, system.name);
         System got = given()
                 .when()
                 .get("/api/systems/{systemId}", saved.systemId)
                 .then()
                 .statusCode(Response.Status.OK.getStatusCode())
                 .extract().as(System.class);
-        Assertions.assertEquals(saved, got);
+        assertEquals(saved, got);
     }
 
     @Test
@@ -55,7 +55,7 @@ public class SystemResourceTest {
                 .then()
                 .statusCode(Response.Status.BAD_REQUEST.getStatusCode())
                 .extract().as(ErrorResponse.class);
-        Assertions.assertEquals(errorResponse.errors().get(0).path(), "post.system.name");
+        assertEquals(errorResponse.errors().get(0).path(), "post.system.name");
     }
 
     @Test
@@ -71,7 +71,38 @@ public class SystemResourceTest {
                 .then()
                 .statusCode(Response.Status.BAD_REQUEST.getStatusCode())
                 .extract().as(ErrorResponse.class);
-        Assertions.assertEquals(errorResponse.errors().get(0).path(), "post.system.systemId");
+        assertEquals(errorResponse.errors().get(0).path(), "post.system.systemId");
+    }
+
+    @Test
+    public void postAndPutAndGetById() {
+        System system = new System();
+        system.name = RandomStringUtils.randomAlphabetic(5);
+        System saved = given()
+                .when()
+                .contentType(ContentType.JSON)
+                .body(system)
+                .post("/api/systems")
+                .then()
+                .statusCode(Response.Status.CREATED.getStatusCode())
+                .extract().as(System.class);
+        assertNotNull(saved.systemId);
+        assertEquals(saved.name, system.name);
+        saved.name = RandomStringUtils.randomAlphabetic(5);
+        given()
+                .when()
+                .contentType(ContentType.JSON)
+                .body(saved)
+                .put("/api/systems/{systemId}", saved.systemId)
+                .then()
+                .statusCode(Response.Status.NO_CONTENT.getStatusCode());
+        System got = given()
+                .when()
+                .get("/api/systems/{systemId}", saved.systemId)
+                .then()
+                .statusCode(Response.Status.OK.getStatusCode())
+                .extract().as(System.class);
+        assertEquals(got, saved);
     }
 
 }

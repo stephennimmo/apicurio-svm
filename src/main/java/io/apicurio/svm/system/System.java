@@ -39,4 +39,12 @@ public class System extends PanacheEntityBase {
         return result;
     }
 
+    @Override
+    public String toString() {
+        return "System[" +
+                "systemId=" + systemId +
+                ", name='" + name + '\'' +
+                ']';
+    }
+
 }
