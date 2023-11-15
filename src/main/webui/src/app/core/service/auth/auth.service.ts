@@ -17,4 +17,8 @@ export class AuthService {
     return !this.jwtHelper.isTokenExpired(token);
   }
 
+  login(username: string, password: string) {
+
+  }
+
 }

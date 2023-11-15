@@ -3,7 +3,9 @@ quarkus:
     enabled: false
   flyway:
     migrate-at-start: true
-
+    locations: db/migration
+  quinoa:
+    enable-spa-routing: true
 
 "%dev":
   quarkus:

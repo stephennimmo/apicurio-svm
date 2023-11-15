@@ -1,7 +1,6 @@
 package io.apicurio.svm.system;
 
 import io.apicurio.svm.exception.ErrorResponse;
-import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -20,7 +19,6 @@ import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 import java.net.URI;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 @Path("/systems")
 @Produces(MediaType.APPLICATION_JSON)

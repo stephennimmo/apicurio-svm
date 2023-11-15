@@ -1,0 +1,21 @@
+<div class="row mb-3">
+  <h1 class="col">Systems</h1>
+  <div class="col float-end">
+    <button type="button" class="btn btn-primary">New</button>
+  </div>
+</div>
+
+<div class="card">
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th scope="col">Name</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let system of systems$ | async; index as i">
+      <td>{{ system.name }}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>

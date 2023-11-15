@@ -6,12 +6,11 @@
         <div class="card-body">
           <app-page-errors [errors]="errors"></app-page-errors>
           <div class="mb-3">
-            <label for="email">Email</label>
-            <input id="email" type="email" formControlName="email" class="form-control"
-                   [ngClass]="{ 'is-invalid': form.submitted && controls.email.invalid }">
-            <div *ngIf="form.submitted && controls.email.invalid" class="text-danger">
-              <small *ngIf="controls.email.errors?.required">Email is required.</small>
-              <small *ngIf="controls.email.errors?.email">Email is invalid.</small>
+            <label for="username">Username</label>
+            <input id="username" type="text" formControlName="username" class="form-control"
+                   [ngClass]="{ 'is-invalid': form.submitted && controls.username.invalid }">
+            <div *ngIf="form.submitted && controls.username.invalid" class="text-danger">
+              <small *ngIf="controls.username.errors?.required">Username is required.</small>
             </div>
           </div>
           <div class="mb-3">
