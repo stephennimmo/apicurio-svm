@@ -1,6 +1,6 @@
 package io.apicurio.svm.system;
 
-import io.apicurio.svm.ErrorResponse;
+import io.apicurio.svm.exception.ErrorResponse;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;

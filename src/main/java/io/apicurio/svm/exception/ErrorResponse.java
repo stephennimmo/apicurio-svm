@@ -1,4 +1,4 @@
-package io.apicurio.svm;
+package io.apicurio.svm.exception;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 

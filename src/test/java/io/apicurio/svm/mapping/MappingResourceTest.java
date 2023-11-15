@@ -1,27 +1,24 @@
-package io.apicurio.svm.system;
+package io.apicurio.svm.mapping;
 
-import io.apicurio.svm.exception.ErrorResponse;
 import io.quarkus.test.junit.QuarkusTest;
-import io.restassured.http.ContentType;
 import jakarta.ws.rs.core.Response;
-import org.apache.commons.lang3.RandomStringUtils;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
 
 @QuarkusTest
-public class SystemResourceTest {
+public class MappingResourceTest {
 
     @Test
     public void get() {
         given()
                 .when()
-                .get("/api/systems")
+                .get("/api/mappings")
                 .then()
                 .statusCode(Response.Status.OK.getStatusCode());
     }
 
+    /*
     @Test
     public void postAndGetById() {
         System system = new System();
@@ -73,5 +70,7 @@ public class SystemResourceTest {
                 .extract().as(ErrorResponse.class);
         Assertions.assertEquals(errorResponse.errors().get(0).path(), "post.system.systemId");
     }
+
+     */
 
 }

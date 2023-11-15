@@ -1,4 +1,4 @@
-package io.apicurio.svm;
+package io.apicurio.svm.exception;
 
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.ext.ExceptionMapper;

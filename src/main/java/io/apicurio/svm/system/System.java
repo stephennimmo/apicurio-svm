@@ -12,7 +12,7 @@ public class System extends PanacheEntityBase {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "system_id")
-    public Long systemId;
+    public Integer systemId;
 
     @NotEmpty
     public String name;
