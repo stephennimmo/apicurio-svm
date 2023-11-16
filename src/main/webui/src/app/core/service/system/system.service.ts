@@ -7,7 +7,8 @@ import { Observable } from 'rxjs';
 })
 export class SystemService {
 
-  constructor(private readonly httpClient: HttpClient) { }
+  constructor(private readonly httpClient: HttpClient) {
+  }
 
   findAll(): Observable<System[]> {
     return this.httpClient.get<System[]>("/api/systems");

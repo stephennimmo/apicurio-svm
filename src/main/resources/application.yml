@@ -7,6 +7,7 @@ quarkus:
   quinoa:
     enable-spa-routing: true
 
+
 "%dev":
   quarkus:
     hibernate-orm:
@@ -14,6 +15,13 @@ quarkus:
         sql: true
     flyway:
       locations: db/migration,db/testdata
+    keycloak:
+      devservices:
+        realm-path: test-realm.json
+    oidc:
+      client-id: apicurio-svm-api
+      credentials:
+        secret: api-secret
 
 "%test":
   quarkus:
@@ -22,3 +30,10 @@ quarkus:
         sql: true
     flyway:
       locations: db/migration,db/testdata
+    keycloak:
+      devservices:
+        realm-path: test-realm.json
+    oidc:
+      client-id: apicurio-svm-api
+      credentials:
+        secret: api-secret
