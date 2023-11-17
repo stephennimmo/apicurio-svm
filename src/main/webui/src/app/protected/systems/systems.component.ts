@@ -5,10 +5,10 @@ import { BaseComponent } from '../../shared/base-component';
 
 @Component({
   selector: 'app-system',
-  templateUrl: './system.component.html',
-  styleUrls: ['./system.component.scss']
+  templateUrl: './systems.component.html',
+  styleUrls: ['./systems.component.scss']
 })
-export class SystemComponent extends BaseComponent {
+export class SystemsComponent extends BaseComponent {
 
   systems$?: Observable<System[]>;
 

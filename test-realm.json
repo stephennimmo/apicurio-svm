@@ -4,6 +4,7 @@
   "clients": [
     {
       "clientId": "apicurio-svm-api",
+      "publicClient": true,
       "clientAuthenticatorType": "client-secret",
       "secret": "api-secret",
       "directAccessGrantsEnabled": true,
@@ -29,6 +30,7 @@
         }
       ],
       "realmRoles": [
+        "default-roles-test",
         "svm_system_read",
         "svm_system_write"
       ]

@@ -5,9 +5,24 @@
       &#9776;
     </button>
     <div [ngbCollapse]="isCollapsed" class="collapse navbar-collapse">
-      <ul class="navbar-nav me-auto">
+      <ul *ngIf="(isLoggedIn|async)" class="navbar-nav me-auto">
         <li class="nav-item" [routerLinkActive]="['active']">
-          <a class="nav-link" routerLink="app/system" (click)="isCollapsed = true">System</a>
+          <a class="nav-link" routerLink="app/systems" (click)="isCollapsed = true">Systems</a>
+        </li>
+      </ul>
+      <ul *ngIf="!(isLoggedIn|async)" class="navbar-nav ms-auto">
+        <li class="nav-item" [routerLinkActive]="['active']">
+          <a class="nav-link" (click)="isCollapsed = true; login()">Login</a>
+        </li>
+      </ul>
+      <ul *ngIf="(isLoggedIn|async)" class="navbar-nav ms-auto">
+        <li ngbDropdown class="nav-item dropdown">
+          <a ngbDropdownToggle class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown">
+            {{ (userProfile|async)?.username }}
+          </a>
+          <ul ngbDropdownMenu class="dropdown-menu">
+            <button ngbDropdownItem (click)="logout()">Logout</button>
+          </ul>
         </li>
       </ul>
     </div>

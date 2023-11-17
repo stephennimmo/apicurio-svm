@@ -18,6 +18,7 @@ quarkus:
     keycloak:
       devservices:
         realm-path: test-realm.json
+        port: 8081
     oidc:
       client-id: apicurio-svm-api
       credentials:

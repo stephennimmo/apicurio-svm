@@ -1,7 +1,9 @@
 package io.apicurio.svm.system;
 
+import io.apicurio.svm.Role;
 import io.apicurio.svm.exception.ErrorResponse;
 import io.quarkus.test.junit.QuarkusTest;
+import io.quarkus.test.security.TestSecurity;
 import io.restassured.http.ContentType;
 import jakarta.ws.rs.core.Response;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -15,6 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 public class SystemResourceTest {
 
     @Test
+    @TestSecurity(user = "user1", roles = Role.ROLE_SVM_SYSTEM_READ)
     public void get() {
         given()
                 .when()
@@ -24,6 +27,7 @@ public class SystemResourceTest {
     }
 
     @Test
+    @TestSecurity(user = "user1", roles = {Role.ROLE_SVM_SYSTEM_READ, Role.ROLE_SVM_SYSTEM_WRITE})
     public void postAndGetById() {
         System system = new System();
         system.name = RandomStringUtils.randomAlphabetic(5);
@@ -47,6 +51,7 @@ public class SystemResourceTest {
     }
 
     @Test
+    @TestSecurity(user = "view", roles = {Role.ROLE_SVM_SYSTEM_WRITE})
     public void failPostNoName() {
         ErrorResponse errorResponse = given()
                 .when()
@@ -60,6 +65,7 @@ public class SystemResourceTest {
     }
 
     @Test
+    @TestSecurity(user = "user1", roles = {Role.ROLE_SVM_SYSTEM_WRITE})
     public void failPostWithSystemId() {
         System system = new System();
         system.systemId = 1234;
@@ -76,6 +82,7 @@ public class SystemResourceTest {
     }
 
     @Test
+    @TestSecurity(user = "user1", roles = {Role.ROLE_SVM_SYSTEM_READ, Role.ROLE_SVM_SYSTEM_WRITE})
     public void postAndPutAndGetById() {
         System system = new System();
         system.name = RandomStringUtils.randomAlphabetic(5);

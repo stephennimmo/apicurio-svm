@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProtectedRoutingModule } from './protected-routing.module';
-import { SystemComponent } from './system/system.component';
+import { SystemsComponent } from './systems/systems.component';
 
 
 @NgModule({
   declarations: [
-    SystemComponent
+    SystemsComponent
   ],
   imports: [
     CommonModule,

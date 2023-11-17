@@ -1,5 +1,8 @@
 package io.apicurio.svm.mapping;
 
+import io.apicurio.svm.Role;
+import io.quarkus.security.Authenticated;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
@@ -15,6 +18,7 @@ import java.util.Objects;
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @Tag(name = "mapping", description = "Mapping Operations")
+@Authenticated
 public class MappingResource {
 
     @GET
@@ -26,6 +30,7 @@ public class MappingResource {
                     schema = @Schema(type = SchemaType.ARRAY, implementation = Mapping.class)
             )
     )
+    @RolesAllowed({Role.ROLE_SVM_ADMIN, Role.ROLE_SVM_MAPPING_READ})
     public List<Mapping> get(@QueryParam("sourceSystemId") Integer sourceSystemId, @QueryParam("targetSystemId") Integer targetSystemId) {
         if (Objects.nonNull(sourceSystemId) && Objects.nonNull(targetSystemId)) {
             return this.findBySourceSystemIdAndTargetSystemId(sourceSystemId, targetSystemId);
